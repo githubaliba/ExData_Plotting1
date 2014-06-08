@@ -9,9 +9,40 @@ powerdata$DateTime <- as.POSIXct(paste(powerdata$Date, powerdata$Time),format="%
 
 reportdata <- powerdata[powerdata$Date >= "2007-02-01" & powerdata$Date <= "2007-02-02",]
 
-##
-hist(reportdata$Global.ActivePower)
-plot(reportdata$DateTime, reportdata$Global.ActivePower,col="black",type="l")
-plot(reportdata$DateTime, reportdata$SubMetering1,col="black",type="l")
+## plot 1
+png(filename="plot1.png",width=480,height=480,units="px")
+hist(reportdata$Global.ActivePower,xlab="Global Active Power (kilowatts)",ylab="Frequency",main="Global Active Power",col="red")
+dev.off()
+
+## plot 2
+png(filename="plot2.png",width=480,height=480,units="px")
+plot(reportdata$DateTime, reportdata$Global.ActivePower,col="black",type="l", xlab="", ylab="Global Active Power (kilowatts)")
+dev.off()
+
+## plot 3
+png(filename="plot3.png",width=480,height=480,units="px")
+plot(reportdata$DateTime, reportdata$SubMetering1,col="black",type="l",xlab="",ylab="Energy sub metering")
 lines(reportdata$DateTime, reportdata$SubMetering2,col="red",type="l")
 lines(reportdata$DateTime, reportdata$SubMetering3,col="blue",type="l")
+legend("topright",c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=c(1,1,1),lwd=c(2.5,2.5,2.5),col=c("black","red","blue"))
+dev.off()
+
+##plot 4
+png(filename="plot4.png",width=480,height=480,units="px")
+par(mfrow=c(2,2))
+## plot 4.1
+plot(reportdata$DateTime, reportdata$Global.ActivePower,col="black",type="l", xlab="", ylab="Global Active Power")
+
+## plot 4.2
+plot(reportdata$DateTime, reportdata$Voltage,col="black",type="l", xlab="datetime", ylab="Voltage")
+
+## plot 4.3
+plot(reportdata$DateTime, reportdata$SubMetering1,col="black",type="l",xlab="",ylab="Energy sub metering")
+lines(reportdata$DateTime, reportdata$SubMetering2,col="red",type="l")
+lines(reportdata$DateTime, reportdata$SubMetering3,col="blue",type="l")
+legend("topright",c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=c(1,1,1),lwd=c(2.5,2.5,2.5),col=c("black","red","blue"),bty="n")
+
+## plot 4.4
+plot(reportdata$DateTime, reportdata$Global.ReactivePower,col="black",type="l", xlab="datetime", ylab="Global_reactive_power")
+
+dev.off()
